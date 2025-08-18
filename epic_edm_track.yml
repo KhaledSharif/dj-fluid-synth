@@ -1,0 +1,281 @@
+# Epic EDM Track - No Hi-Hats, Maximum Melody
+# Features plucks, arps, percussion, and rich harmonic content
+
+tempo: 128
+sample_rate: 44100
+sidechain: true  # Re-enabled with better implementation
+sidechain_strength: 0.5
+
+sections:
+  # === INTRO (8 bars) - Atmospheric opening ===
+  - name: intro
+    bars: 8
+    tracks:
+      - type: kick
+        pattern: [1, 0, 0, 0, 0, 0, 0, 0]  # Sparse kick
+        volume: 0.6
+      - type: pad
+        notes: ["C3", "G3", "A3", "F3"]  
+        durations: [8, 8, 8, 8]
+        volume: 0.5
+      - type: pluck
+        notes: ["C5", "rest", "G4", "rest", "E4", "rest", "C4", "rest"]
+        durations: [1, 1, 1, 1, 1, 1, 1, 1]
+        volume: 0.4
+      - type: sweep
+        start_freq: 100
+        end_freq: 3000
+        volume: 0.15
+
+  # === BUILD 1 (8 bars) - Energy rising ===
+  - name: build1
+    bars: 8
+    tracks:
+      - type: kick
+        pattern: [1, 0, 0, 0]  
+        volume: 0.8
+      - type: clap
+        pattern: [0, 0, 1, 0]  
+        volume: 0.5
+      - type: percussion
+        pattern: [0, 0.3, 0, 0.5, 0, 0.3, 0, 0.7]  # Rhythmic percussion fills
+        volume: 0.4
+      - type: bass
+        notes: ["C2", "C2", "E2", "G2", "A2", "A2", "F2", "F2"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        volume: 0.7
+      - type: pad
+        notes: ["C4", "G4", "A4", "F4"]
+        durations: [8, 8, 8, 8]
+        volume: 0.6
+      - type: arp
+        notes: ["C4", "E4", "G4", "C5"]
+        durations: [1, 1, 1, 1]
+        volume: 0.5
+      - type: melody
+        notes: ["rest", "rest", "C5", "D5", "E5", "G5", "A5", "C6"]
+        durations: [2, 2, 0.5, 0.5, 0.5, 1, 1, 0.5]
+        volume: 0.5
+
+  # === PRE-DROP (4 bars) - Maximum tension ===
+  - name: pre_drop
+    bars: 4
+    tracks:
+      - type: kick
+        pattern: [1, 1, 1, 1]  
+        volume: 0.9
+      - type: snare
+        pattern: [0.2, 0.4, 0.6, 0.8]  # Snare roll
+        volume: 0.8
+      - type: sweep
+        start_freq: 2000
+        end_freq: 12000
+        volume: 0.6
+      - type: melody
+        notes: ["C6", "D6", "E6", "G6"]  
+        durations: [1, 1, 1, 1]
+        volume: 0.7
+      - type: pluck
+        notes: ["C5", "C5", "C5", "C5", "C5", "C5", "C5", "C5"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        volume: 0.6
+
+  # === DROP 1 (16 bars) - Main drop with full energy ===
+  - name: drop1
+    bars: 16
+    tracks:
+      - type: kick
+        pattern: [1, 0, 0, 0]
+        volume: 1.0
+      - type: clap
+        pattern: [0, 0, 1, 0]
+        volume: 0.7
+      - type: snare
+        pattern: [0, 0, 0, 0, 0, 0, 0, 1]  # Accent every 2 bars
+        volume: 0.6
+      - type: percussion
+        pattern: [0, 0.5, 0, 0.3, 0.6, 0, 0.3, 0.5]
+        volume: 0.5
+      - type: sub_bass
+        notes: ["C1", "rest", "rest", "rest", "G1", "rest", "rest", "rest",
+                "A1", "rest", "rest", "rest", "F1", "rest", "rest", "rest"]
+        durations: [0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+                    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25]
+        volume: 1.0
+      - type: bass
+        notes: ["C2", "C2", "E2", "G2", "G2", "G2", "B2", "D3",
+                "A2", "A2", "C3", "E3", "F2", "F2", "A2", "C3"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                    0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        volume: 0.8
+      - type: melody
+        notes: ["G5", "E5", "C5", "D5", "E5", "G5", "A5", "G5",
+                "E5", "C5", "G4", "A4", "C5", "E5", "D5", "C5",
+                "A5", "G5", "E5", "D5", "C5", "D5", "E5", "G5"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                    0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25]
+        volume: 0.9
+      - type: arp
+        notes: ["C4", "E4", "G4", "C5", "G4", "E4", "C4", "G3"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        volume: 0.6
+      - type: pad
+        notes: ["C3", "G3", "A3", "F3"]
+        durations: [16, 16, 16, 16]
+        volume: 0.4
+
+  # === BREAKDOWN (8 bars) - Melodic focus ===
+  - name: breakdown
+    bars: 8
+    tracks:
+      - type: kick
+        pattern: [1, 0, 0, 0, 0, 0, 0, 0]  
+        volume: 0.4
+      - type: percussion
+        pattern: [0, 0, 0.2, 0, 0, 0.3, 0, 0]
+        volume: 0.3
+      - type: bass
+        notes: ["C2", "E2", "G2", "C3", "A2", "C3", "E3", "A2", 
+                "F2", "A2", "C3", "F3", "G2", "B2", "D3", "G3"]
+        durations: [1, 1, 1, 1, 1, 1, 1, 1, 
+                    1, 1, 1, 1, 1, 1, 1, 1]
+        volume: 0.6
+      - type: pad
+        notes: ["C4", "E4", "G4", "C5", "A4", "C5", "E5", "A4", 
+                "F4", "A4", "C5", "F5", "G4", "B4", "D5", "G5"]
+        durations: [2, 2, 2, 2, 2, 2, 2, 2, 
+                    2, 2, 2, 2, 2, 2, 2, 2]
+        volume: 0.8
+      - type: pluck
+        notes: ["E5", "D5", "C5", "B4", "C5", "D5", "E5", "G5",
+                "A5", "G5", "E5", "D5", "C5", "B4", "A4", "G4"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                    0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        volume: 0.7
+      - type: melody
+        notes: ["C6", "B5", "A5", "G5", "E5", "D5", "C5", "G4",
+                "A4", "C5", "E5", "G5", "A5", "G5", "E5", "C5"]
+        durations: [1, 0.5, 0.5, 1, 1, 0.5, 0.5, 1,
+                    1, 0.5, 0.5, 1, 1, 0.5, 0.5, 1]
+        volume: 0.8
+
+  # === BUILD 2 (8 bars) - Build tension again ===
+  - name: build2
+    bars: 8
+    tracks:
+      - type: kick
+        pattern: [1, 0, 0.5, 0]  
+        volume: 0.9
+      - type: snare
+        pattern: [0, 0, 1, 0]
+        volume: 0.7
+      - type: clap
+        pattern: [0, 1, 0, 0]
+        volume: 0.5
+      - type: percussion
+        pattern: [0.3, 0.5, 0.3, 0.7, 0.3, 0.5, 0.3, 0.9]
+        volume: 0.6
+      - type: bass
+        notes: ["C2", "C2", "C2", "C2", "E2", "E2", "G2", "G2",
+                "A2", "A2", "A2", "A2", "C3", "C3", "E3", "G3"]
+        durations: [0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+                    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25]
+        volume: 0.8
+      - type: arp
+        notes: ["C5", "E5", "G5", "C6"]
+        durations: [1, 1, 1, 1]
+        volume: 0.7
+      - type: sweep
+        start_freq: 1000
+        end_freq: 10000
+        volume: 0.5
+      - type: melody
+        notes: ["C5", "D5", "E5", "G5", "A5", "G5", "E5", "C6",
+                "D6", "C6", "A5", "G5", "E5", "D5", "C5", "G5"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                    0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        volume: 0.7
+
+  # === DROP 2 (16 bars) - Epic finale ===
+  - name: drop2
+    bars: 16
+    tracks:
+      - type: kick
+        pattern: [1, 0, 0, 0, 1, 0, 0, 0]  
+        volume: 1.0
+      - type: snare
+        pattern: [0, 0, 1, 0]
+        volume: 0.8
+      - type: clap
+        pattern: [0, 0.5, 0, 0, 0, 0, 1, 0]
+        volume: 0.7
+      - type: percussion
+        pattern: [0.4, 0, 0.6, 0.3, 0, 0.5, 0.3, 0.7]
+        volume: 0.6
+      - type: sub_bass
+        notes: ["F1", "rest", "rest", "rest", "C1", "rest", "rest", "rest",
+                "G1", "rest", "rest", "rest", "A1", "rest", "rest", "rest"]
+        durations: [0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+                    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25]
+        volume: 1.0
+      - type: bass
+        notes: ["F2", "F2", "A2", "C3", "C2", "C2", "E2", "G2",
+                "G2", "G2", "B2", "D3", "A2", "A2", "C3", "E3"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                    0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        volume: 0.9
+      - type: melody
+        notes: ["F5", "E5", "D5", "C5", "E5", "G5", "C6", "G5",
+                "A5", "G5", "E5", "C5", "D5", "E5", "G5", "E5",
+                "C6", "A5", "G5", "E5", "D5", "C5", "E5", "G5",
+                "A5", "C6", "E6", "G6", "E6", "C6", "A5", "G5"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                    0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+                    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25]
+        volume: 1.0
+      - type: arp
+        notes: ["F4", "A4", "C5", "F5", "C5", "A4", "F4", "C4"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        volume: 0.7
+      - type: pluck
+        notes: ["C5", "rest", "E5", "rest", "G5", "rest", "C6", "rest"]
+        durations: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        volume: 0.6
+      - type: pad
+        notes: ["F3", "C3", "G3", "A3"]
+        durations: [16, 16, 16, 16]
+        volume: 0.4
+
+  # === OUTRO (8 bars) - Epic ending ===
+  - name: outro
+    bars: 8
+    tracks:
+      - type: kick
+        pattern: [1, 0, 0, 0, 0, 0, 0, 0]
+        volume: 0.7
+      - type: percussion
+        pattern: [0, 0, 0.2, 0, 0, 0, 0, 0]
+        volume: 0.3
+      - type: bass
+        notes: ["C2", "rest", "G1", "rest", "F1", "rest", "C1", "rest"]
+        durations: [2, 2, 2, 2, 2, 2, 2, 2]
+        volume: 0.5
+      - type: pad
+        notes: ["C3", "G3", "F3", "C3"]
+        durations: [8, 8, 8, 8]
+        volume: 0.6
+      - type: pluck
+        notes: ["C5", "G4", "E4", "C4", "rest", "rest", "rest", "rest"]
+        durations: [2, 2, 2, 2, 2, 2, 2, 2]
+        volume: 0.5
+      - type: melody
+        notes: ["C6", "G5", "E5", "C5", "G4", "E4", "C4", "rest"]
+        durations: [2, 2, 2, 2, 2, 2, 2, 2]
+        volume: 0.6
+      - type: sweep
+        start_freq: 8000
+        end_freq: 50
+        reverse: true
+        volume: 0.4

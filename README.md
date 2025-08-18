@@ -1,2 +1,3 @@
-# dj-fluid-synth
-trying to create EDM music using fluidsynth and some magic
+# DJ Fluid Synth
+
+In this repo I will try to create EDM music using fluidsynth and some magic
