@@ -20,7 +20,18 @@ from main import (
     generate_arp,
     generate_percussion,
     apply_sidechain,
-    generate_edm_from_yaml
+    generate_edm_from_yaml,
+    apply_lowpass,
+    apply_highpass,
+    generate_supersaw,
+    generate_future_bass,
+    generate_reese_bass,
+    generate_pluck_bass,
+    generate_dubstep_bass,
+    generate_white_noise_riser,
+    generate_impact,
+    generate_pitch_bend_bass,
+    apply_automation
 )
 
 
@@ -45,13 +56,20 @@ class TestNoteConversion(unittest.TestCase):
         self.assertLess(freq, note_to_freq("D4"))
         
     def test_note_to_freq_all_notes(self):
-        # Test all notes in an octave
+        # Test all notes in an octave (chromatic scale)
         notes = ["C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4"]
-        prev_freq = 0
-        for note in notes:
-            freq = note_to_freq(note)
-            self.assertGreater(freq, prev_freq)
-            prev_freq = freq
+        freqs = [note_to_freq(note) for note in notes]
+        # Check that frequencies are in ascending order
+        for i in range(1, len(freqs)):
+            self.assertGreater(freqs[i], freqs[i-1], f"{notes[i]} should be higher than {notes[i-1]}")
+    
+    def test_note_to_freq_flats(self):
+        # Test flat notes
+        self.assertAlmostEqual(note_to_freq("Bb4"), note_to_freq("A#4"), places=5)
+        self.assertAlmostEqual(note_to_freq("Db4"), note_to_freq("C#4"), places=5)
+        self.assertAlmostEqual(note_to_freq("Eb4"), note_to_freq("D#4"), places=5)
+        self.assertAlmostEqual(note_to_freq("Gb4"), note_to_freq("F#4"), places=5)
+        self.assertAlmostEqual(note_to_freq("Ab4"), note_to_freq("G#4"), places=5)
 
 
 class TestEnvelope(unittest.TestCase):
@@ -394,6 +412,240 @@ class TestEdgeCases(unittest.TestCase):
         # Should handle very high frequencies
         wave = generate_melody(8000, 0.1, 44100)
         self.assertIsNotNone(wave)
+
+
+class TestNewSynths(unittest.TestCase):
+    def setUp(self):
+        self.fs = 44100
+        self.duration = 0.5
+        self.freq = 440  # A4
+        
+    def test_generate_supersaw(self):
+        wave = generate_supersaw(self.freq, self.duration, self.fs)
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        self.assertLessEqual(np.max(np.abs(wave)), 1.0)
+        
+    def test_generate_supersaw_rest(self):
+        wave = generate_supersaw(0, self.duration, self.fs)
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        np.testing.assert_array_equal(wave, np.zeros(len(wave)))
+        
+    def test_generate_future_bass(self):
+        wave = generate_future_bass(self.freq, self.duration, self.fs)
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        self.assertLessEqual(np.max(np.abs(wave)), 1.0)
+        
+    def test_generate_reese_bass(self):
+        wave = generate_reese_bass(110, self.duration, self.fs)  # A2
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        self.assertLessEqual(np.max(np.abs(wave)), 1.0)
+        
+    def test_generate_pluck_bass(self):
+        wave = generate_pluck_bass(110, self.duration, self.fs)  # A2
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        self.assertLessEqual(np.max(np.abs(wave)), 1.0)
+        
+    def test_generate_dubstep_bass(self):
+        wave = generate_dubstep_bass(55, self.duration, self.fs, wobble_rate=4)  # A1
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        self.assertLessEqual(np.max(np.abs(wave)), 1.0)
+        
+    def test_generate_white_noise_riser(self):
+        wave = generate_white_noise_riser(self.duration, self.fs)
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        self.assertLessEqual(np.max(np.abs(wave)), 1.0)
+        
+    def test_generate_impact(self):
+        wave = generate_impact(self.duration, self.fs)
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        self.assertLessEqual(np.max(np.abs(wave)), 1.0)
+        
+    def test_generate_pitch_bend_bass(self):
+        wave = generate_pitch_bend_bass("A2", "E3", self.duration, self.fs)
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        self.assertLessEqual(np.max(np.abs(wave)), 1.0)
+        
+    def test_generate_pitch_bend_bass_rest(self):
+        wave = generate_pitch_bend_bass("rest", "rest", self.duration, self.fs)
+        self.assertEqual(len(wave), int(self.fs * self.duration))
+        np.testing.assert_array_equal(wave, np.zeros(len(wave)))
+
+
+class TestFilters(unittest.TestCase):
+    def setUp(self):
+        self.fs = 44100
+        self.duration = 0.5
+        self.samples = int(self.fs * self.duration)
+        # Create test signal with multiple frequencies
+        t = np.linspace(0, self.duration, self.samples)
+        self.test_wave = np.sin(2 * np.pi * 100 * t) + np.sin(2 * np.pi * 1000 * t) + np.sin(2 * np.pi * 5000 * t)
+        
+    def test_apply_lowpass_scalar(self):
+        filtered = apply_lowpass(self.test_wave, 500, self.fs)
+        self.assertEqual(len(filtered), self.samples)
+        # Should preserve low frequencies better than high
+        fft_orig = np.fft.fft(self.test_wave)
+        fft_filtered = np.fft.fft(filtered)
+        # Check that high frequencies are attenuated
+        high_freq_idx = int(5000 * self.samples / self.fs)
+        low_freq_idx = int(100 * self.samples / self.fs)
+        self.assertLess(np.abs(fft_filtered[high_freq_idx]), np.abs(fft_orig[high_freq_idx]) * 0.5)
+        
+    def test_apply_lowpass_array(self):
+        # Test with array of cutoff values (time-varying filter)
+        cutoff_array = np.linspace(200, 2000, 100)
+        filtered = apply_lowpass(self.test_wave, cutoff_array, self.fs)
+        self.assertEqual(len(filtered), self.samples)
+        
+    def test_apply_highpass(self):
+        filtered = apply_highpass(self.test_wave, 2000, self.fs)
+        self.assertEqual(len(filtered), self.samples)
+        # Should preserve high frequencies better than low
+        fft_orig = np.fft.fft(self.test_wave)
+        fft_filtered = np.fft.fft(filtered)
+        # Check that low frequencies are attenuated
+        low_freq_idx = int(100 * self.samples / self.fs)
+        self.assertLess(np.abs(fft_filtered[low_freq_idx]), np.abs(fft_orig[low_freq_idx]) * 0.5)
+
+
+class TestAutomation(unittest.TestCase):
+    def setUp(self):
+        self.fs = 44100
+        self.duration = 1.0
+        self.samples = int(self.fs * self.duration)
+        self.test_wave = np.ones(self.samples)
+        
+    def test_automation_fade_in(self):
+        result = apply_automation(self.test_wave, "fade_in", self.duration, self.fs)
+        self.assertEqual(len(result), self.samples)
+        # Should start quiet and end loud
+        self.assertLess(result[0], result[-1])
+        self.assertAlmostEqual(result[0], 0, places=2)
+        self.assertAlmostEqual(result[-1], 1, places=2)
+        
+    def test_automation_fade_out(self):
+        result = apply_automation(self.test_wave, "fade_out", self.duration, self.fs)
+        self.assertEqual(len(result), self.samples)
+        # Should start loud and end quiet
+        self.assertGreater(result[0], result[-1])
+        self.assertAlmostEqual(result[0], 1, places=2)
+        self.assertAlmostEqual(result[-1], 0, places=2)
+        
+    def test_automation_swell(self):
+        result = apply_automation(self.test_wave, "swell", self.duration, self.fs)
+        self.assertEqual(len(result), self.samples)
+        # Should be loudest in the middle
+        mid_point = self.samples // 2
+        self.assertGreater(result[mid_point], result[0])
+        self.assertGreater(result[mid_point], result[-1])
+        
+    def test_automation_pulse(self):
+        result = apply_automation(self.test_wave, "pulse", self.duration, self.fs)
+        self.assertEqual(len(result), self.samples)
+        # Should oscillate
+        self.assertLessEqual(np.max(result), 1.0)
+        self.assertGreaterEqual(np.min(result), 0.0)
+
+
+class TestEnhancedFeatures(unittest.TestCase):
+    def setUp(self):
+        self.temp_dir = tempfile.mkdtemp()
+        
+    def tearDown(self):
+        # Clean up temp files
+        for file in os.listdir(self.temp_dir):
+            os.remove(os.path.join(self.temp_dir, file))
+        os.rmdir(self.temp_dir)
+        
+    def test_generate_with_supersaw(self):
+        yaml_data = {
+            'tempo': 128,
+            'sample_rate': 44100,
+            'sections': [
+                {
+                    'name': 'test',
+                    'bars': 1,
+                    'tracks': [
+                        {
+                            'type': 'supersaw',
+                            'notes': ['C4', 'E4', 'G4'],
+                            'durations': [1, 1, 2],
+                            'detune': 0.03,
+                            'voices': 7,
+                            'volume': 0.5
+                        }
+                    ]
+                }
+            ]
+        }
+        
+        yaml_path = os.path.join(self.temp_dir, 'supersaw.yml')
+        wav_path = os.path.join(self.temp_dir, 'supersaw.wav')
+        
+        with open(yaml_path, 'w') as f:
+            yaml.dump(yaml_data, f)
+            
+        generate_edm_from_yaml(yaml_path, wav_path)
+        self.assertTrue(os.path.exists(wav_path))
+        
+    def test_generate_with_flat_notes(self):
+        yaml_data = {
+            'tempo': 120,
+            'sample_rate': 44100,
+            'sections': [
+                {
+                    'name': 'test',
+                    'bars': 1,
+                    'tracks': [
+                        {
+                            'type': 'melody',
+                            'notes': ['Bb3', 'Eb4', 'Ab4', 'Db5'],
+                            'durations': [1, 1, 1, 1]
+                        }
+                    ]
+                }
+            ]
+        }
+        
+        yaml_path = os.path.join(self.temp_dir, 'flats.yml')
+        wav_path = os.path.join(self.temp_dir, 'flats.wav')
+        
+        with open(yaml_path, 'w') as f:
+            yaml.dump(yaml_data, f)
+            
+        generate_edm_from_yaml(yaml_path, wav_path)
+        self.assertTrue(os.path.exists(wav_path))
+        
+    def test_generate_with_pitch_bend(self):
+        yaml_data = {
+            'tempo': 120,
+            'sample_rate': 44100,
+            'sections': [
+                {
+                    'name': 'test',
+                    'bars': 2,
+                    'tracks': [
+                        {
+                            'type': 'pitch_bend_bass',
+                            'notes': ['C2', 'F2', 'G2', 'C3'],
+                            'bend_notes': ['E2', 'G2', 'A2', 'C3'],
+                            'durations': [1, 1, 1, 1],
+                            'bass_style': 'pluck',
+                            'volume': 0.7
+                        }
+                    ]
+                }
+            ]
+        }
+        
+        yaml_path = os.path.join(self.temp_dir, 'pitch_bend.yml')
+        wav_path = os.path.join(self.temp_dir, 'pitch_bend.wav')
+        
+        with open(yaml_path, 'w') as f:
+            yaml.dump(yaml_data, f)
+            
+        generate_edm_from_yaml(yaml_path, wav_path)
+        self.assertTrue(os.path.exists(wav_path))
 
 
 if __name__ == '__main__':
