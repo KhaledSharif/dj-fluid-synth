@@ -216,7 +216,7 @@ class TestSidechain(unittest.TestCase):
         result_strong = apply_sidechain(self.audio, kick_times, self.fs, self.tempo, strength=0.9)
         result_weak = apply_sidechain(self.audio, kick_times, self.fs, self.tempo, strength=0.3)
         # Stronger sidechain should duck more
-        self.assertLess(np.min(result_strong), np.min(result_weak))
+        self.assertLess(float(np.min(result_strong)), float(np.min(result_weak)))
 
 
 class TestYAMLGeneration(unittest.TestCase):

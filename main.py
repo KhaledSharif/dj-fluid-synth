@@ -4,6 +4,7 @@
 import sys
 import yaml
 import numpy as np
+from typing import Union, Tuple, cast
 from scipy.io import wavfile
 from scipy.signal import butter, lfilter, savgol_filter
 from scipy.ndimage import gaussian_filter1d
@@ -17,17 +18,17 @@ def note_to_freq(note):
         return 0
     octave = int(note[-1]) if note[-1].isdigit() else 4
     note_name = note[:-1] if note[-1].isdigit() else note
-    
+
     # Handle flat notes (e.g., Bb becomes A#)
     # Check for flat only if note_name has more than one character and second char is 'b'
-    if len(note_name) > 1 and note_name[1].lower() == 'b':
+    if len(note_name) > 1 and note_name[1].lower() == "b":
         base_note = note_name[0].upper()
         base_idx = NOTES.index(base_note)
         # Flat means one semitone down
         semitones = (base_idx - 1) % 12
     else:
         semitones = NOTES.index(note_name.upper())
-    
+
     return 440 * (2 ** ((octave - 4) + (semitones - 9) / 12))
 
 
@@ -72,45 +73,74 @@ def apply_envelope(
 
 
 # Filter functions
-def apply_lowpass(wave, cutoff, fs, resonance=1):
+def apply_lowpass(
+    wave: np.ndarray,
+    cutoff: Union[float, np.ndarray],
+    fs: float,
+    resonance: float = 1.0,
+) -> np.ndarray:
     nyquist = fs / 2
-    
+
     # Handle both scalar and array cutoff values
     if np.isscalar(cutoff):
-        normalized_cutoff = min(cutoff / nyquist, 0.99)
-        b, a = butter(2, normalized_cutoff, btype="low")
+        cutoff_val = (
+            float(cutoff) if not isinstance(cutoff, (str, bytes, complex)) else 0.0
+        )
+        normalized_cutoff = min(cutoff_val / nyquist, 0.99)
+        coeffs = butter(2, normalized_cutoff, btype="low")
+        if coeffs is not None:
+            b, a = coeffs[0], coeffs[1]
+        else:
+            b = a = np.array([1.0])
         filtered = lfilter(b, a, wave)
         # Add resonance by mixing with bandpass
         if resonance > 1:
-            bp_b, bp_a = butter(
+            bp_coeffs = butter(
                 2,
                 [normalized_cutoff * 0.9, min(normalized_cutoff * 1.1, 0.99)],
                 btype="band",
             )
-            resonant = lfilter(bp_b, bp_a, wave)
+            if bp_coeffs is not None:
+                bp_b, bp_a = bp_coeffs[0], bp_coeffs[1]
+            else:
+                bp_b = bp_a = np.array([1.0])
+            resonant = cast(np.ndarray, lfilter(bp_b, bp_a, wave))
             filtered = filtered + resonant * (resonance - 1) * 0.3
     else:
         # For time-varying cutoff, use the median cutoff value as a compromise
         # This is a simplified approach that avoids sample-by-sample processing
         median_cutoff = np.median(cutoff)
-        normalized_cutoff = min(median_cutoff / nyquist, 0.99)
-        b, a = butter(2, normalized_cutoff, btype="low")
+        normalized_cutoff = min(float(median_cutoff) / nyquist, 0.99)
+        coeffs = butter(2, normalized_cutoff, btype="low")
+        if coeffs is not None:
+            b, a = coeffs[0], coeffs[1]
+        else:
+            b = a = np.array([1.0])
         filtered = lfilter(b, a, wave)
-        
+
         # Apply amplitude envelope based on cutoff sweep
-        envelope = np.interp(np.arange(len(wave)), 
-                            np.linspace(0, len(wave)-1, len(cutoff)), 
-                            cutoff / np.max(cutoff))
+        if isinstance(cutoff, np.ndarray):
+            envelope = np.interp(
+                np.arange(len(wave)),
+                np.linspace(0, len(wave) - 1, len(cutoff)),
+                cutoff / np.max(cutoff),
+            )
+        else:
+            envelope = np.ones(len(wave))
         filtered = filtered * envelope
-    
-    return filtered
+
+    return cast(np.ndarray, filtered)
 
 
-def apply_highpass(wave, cutoff, fs):
+def apply_highpass(wave: np.ndarray, cutoff: float, fs: float) -> np.ndarray:
     nyquist = fs / 2
     normalized_cutoff = min(cutoff / nyquist, 0.99)
-    b, a = butter(2, normalized_cutoff, btype="high")
-    return lfilter(b, a, wave)
+    coeffs = butter(2, normalized_cutoff, btype="high")
+    if coeffs is not None:
+        b, a = coeffs[0], coeffs[1]
+    else:
+        b = a = np.array([1.0])
+    return cast(np.ndarray, lfilter(b, a, wave))
 
 
 # Enhanced instrument generators
@@ -153,8 +183,8 @@ def generate_snare(duration, fs, tone=0.5):
     tone2 = np.sin(2 * np.pi * 300 * t)
     tones = (tone1 + tone2 * 0.7) * tone
     noise = np.random.uniform(-1, 1, int(fs * duration))
-    noise = apply_highpass(noise, 200, fs)
-    wave = tones * 0.4 + noise * 0.6
+    noise_filtered = apply_highpass(noise, 200, fs)
+    wave = tones * 0.4 + noise_filtered * 0.6
     wave = apply_envelope(
         wave, duration, fs, attack=0.002, decay=0.03, sustain=0.0, release=0.05
     )
@@ -343,9 +373,9 @@ def generate_impact(duration, fs):
     # Mix of low boom and white noise
     boom = np.sin(2 * np.pi * 40 * t) * np.exp(-t / 0.3)
     crash = np.random.uniform(-1, 1, int(fs * duration))
-    crash = apply_highpass(crash, 2000, fs)
+    crash_filtered = apply_highpass(crash, 2000, fs)
 
-    wave = boom * 0.6 + crash * 0.4
+    wave = boom * 0.6 + crash_filtered * 0.4
     wave = apply_envelope(
         wave, duration, fs, attack=0.001, decay=0.5, sustain=0.3, release=0.5
     )
