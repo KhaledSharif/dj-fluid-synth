@@ -614,10 +614,173 @@ def generate_percussion(duration, fs):
     return wave * 0.4
 
 
+# Validation function to check YAML configuration
+def validate_yaml_config(data):
+    """
+    Validate YAML configuration before generating music.
+    Returns a list of errors found. Empty list means valid.
+    """
+    errors = []
+    warnings = []
+    
+    # Check required top-level fields
+    required_fields = ["tempo", "sections"]
+    for field in required_fields:
+        if field not in data:
+            errors.append(f"Missing required field: {field}")
+    
+    if not errors:  # Only continue if basic fields exist
+        tempo = data.get("tempo", 120)
+        
+        # Validate sections
+        sections = data.get("sections", [])
+        if not sections:
+            errors.append("No sections defined in YAML")
+        
+        for i, section in enumerate(sections):
+            section_name = section.get("name", f"section_{i+1}")
+            
+            # Check section has required fields
+            if "bars" not in section:
+                errors.append(f"Section '{section_name}': missing 'bars' field")
+                continue
+                
+            bars = section["bars"]
+            total_beats = bars * 4  # 4 beats per bar
+            
+            # Check tracks in section
+            tracks = section.get("tracks", [])
+            if not tracks:
+                warnings.append(f"Section '{section_name}': no tracks defined")
+            
+            for j, track in enumerate(tracks):
+                track_type = track.get("type", f"track_{j+1}")
+                
+                # Check melodic tracks (have notes and durations)
+                if "notes" in track:
+                    notes = track.get("notes", [])
+                    durations = track.get("durations", [])
+                    
+                    # Check notes/durations array matching
+                    if len(notes) != len(durations):
+                        errors.append(
+                            f"Section '{section_name}', track '{track_type}': "
+                            f"notes ({len(notes)}) and durations ({len(durations)}) arrays don't match"
+                        )
+                    
+                    # Check total duration doesn't exceed section length
+                    if durations:
+                        total_duration = sum(durations)
+                        if total_duration > total_beats:
+                            errors.append(
+                                f"Section '{section_name}', track '{track_type}': "
+                                f"total duration ({total_duration} beats) exceeds section length ({total_beats} beats)"
+                            )
+                        elif total_duration < total_beats:
+                            # Allow shorter durations but warn if significantly short
+                            if total_duration < total_beats * 0.5:
+                                warnings.append(
+                                    f"Section '{section_name}', track '{track_type}': "
+                                    f"duration ({total_duration} beats) is much shorter than section ({total_beats} beats)"
+                                )
+                    
+                    # Validate note names
+                    valid_notes = ["rest", ""]
+                    for note in notes:
+                        if note in valid_notes:
+                            continue
+                        try:
+                            freq = note_to_freq(note)
+                            if freq < 0:
+                                errors.append(
+                                    f"Section '{section_name}', track '{track_type}': "
+                                    f"invalid note '{note}'"
+                                )
+                        except (ValueError, IndexError) as e:
+                            errors.append(
+                                f"Section '{section_name}', track '{track_type}': "
+                                f"invalid note '{note}' - {str(e)}"
+                            )
+                
+                # Check drum tracks (have patterns)
+                if "pattern" in track:
+                    pattern = track.get("pattern", [])
+                    pattern_length = len(pattern)
+                    
+                    # Common pattern lengths should be powers of 2 or multiples of 4
+                    if pattern_length > 0:
+                        # Check if pattern fits evenly into bars
+                        beats_per_pattern = total_beats / pattern_length
+                        if beats_per_pattern != int(beats_per_pattern):
+                            warnings.append(
+                                f"Section '{section_name}', track '{track_type}': "
+                                f"pattern length ({pattern_length}) doesn't divide evenly into {total_beats} beats"
+                            )
+                        
+                        # Validate pattern values (should be 0-1)
+                        for val in pattern:
+                            if not isinstance(val, (int, float)) or val < 0 or val > 1:
+                                errors.append(
+                                    f"Section '{section_name}', track '{track_type}': "
+                                    f"pattern contains invalid velocity value: {val} (must be 0-1)"
+                                )
+                
+                # Check for pitch bend tracks
+                if "bend_notes" in track:
+                    bend_notes = track.get("bend_notes", [])
+                    notes = track.get("notes", [])
+                    if len(bend_notes) != len(notes):
+                        errors.append(
+                            f"Section '{section_name}', track '{track_type}': "
+                            f"bend_notes ({len(bend_notes)}) must match notes ({len(notes)}) length"
+                        )
+                
+                # Validate volume (0-1 range)
+                if "volume" in track:
+                    volume = track.get("volume", 1.0)
+                    if not isinstance(volume, (int, float)) or volume < 0 or volume > 1:
+                        errors.append(
+                            f"Section '{section_name}', track '{track_type}': "
+                            f"invalid volume {volume} (must be 0-1)"
+                        )
+        
+        # Check tempo range
+        if tempo < 60 or tempo > 200:
+            warnings.append(f"Unusual tempo: {tempo} BPM (typical EDM range is 120-140)")
+        
+        # Check sidechain settings
+        if data.get("sidechain", False):
+            sidechain_style = data.get("sidechain_style", "pump")
+            if sidechain_style not in ["pump", "subtle", "extreme", "bounce"]:
+                warnings.append(f"Unknown sidechain_style: {sidechain_style}, using 'pump'")
+            
+            strength = data.get("sidechain_strength", 0.7)
+            if not isinstance(strength, (int, float)) or strength < 0 or strength > 1:
+                errors.append(f"Invalid sidechain_strength: {strength} (must be 0-1)")
+    
+    return errors, warnings
+
+
 # Main function with enhanced features
 def generate_edm_from_yaml(yaml_file, output_wav):
     with open(yaml_file, "r") as f:
         data = yaml.safe_load(f)
+    
+    # Validate YAML configuration before processing
+    errors, warnings = validate_yaml_config(data)
+    
+    # Print warnings
+    for warning in warnings:
+        print(f"Warning: {warning}")
+    
+    # Stop if there are errors
+    if errors:
+        print(f"\n❌ YAML validation failed with {len(errors)} error(s):")
+        for error in errors:
+            print(f"  • {error}")
+        sys.exit(1)
+    
+    print(f"✓ YAML validation passed")
 
     tempo = data["tempo"]
     fs = data.get("sample_rate", 44100)
