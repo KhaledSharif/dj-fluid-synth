@@ -1,0 +1,429 @@
+# FESTIVAL EDM TRACK - Progressive House meets Future Bass
+# Inspired by Martin Garrix & Illenium
+# Features complex chord progressions, pitch bends, and modern production
+
+tempo: 128
+sample_rate: 44100
+sidechain: true
+sidechain_style: pump # pump, duck, or subtle
+sidechain_strength: 0.6
+
+sections:
+# ============================================
+# INTRO (16 bars) - Atmospheric & Mysterious
+# ============================================
+- name: intro
+  bars: 16
+  tracks:
+  # Soft kick introduction
+  - type: kick
+    pattern: [ 1, 0, 0, 0, 0, 0, 0, 0 ] # Every 2 bars
+    volume: 0.3
+    punch: 0.5
+
+  # Atmospheric pad - Am - F - C - G progression
+  - type: pad
+    notes: [ "A2", "E3", "C4", "A2", "F2", "C3", "A3", "F2", "C3", "G3", "E4", "C3", "G2", "D3", "B3", "G2" ]
+    durations: [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+    volume: 0.4
+
+  # Subtle pluck melody
+  - type: pluck
+    notes: [ "rest", "rest", "A4", "C5", "E5", "rest", "F5", "E5", "rest", "C5", "rest", "rest", "G4", "rest", "E4", "rest" ]
+    durations: [ 1, 1, 0.5, 0.5, 1, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 1, 1 ]
+    volume: 0.3
+
+  # Ambient white noise sweep
+  - type: white_noise_riser
+    volume: 0.1
+
+# ============================================
+# BUILD 1 (16 bars) - Energy Rising
+# ============================================
+- name: build1
+  bars: 16
+  tracks:
+  # Building kick pattern
+  - type: kick
+    pattern: [ 1, 0, 0, 0 ]
+    volume: 0.6
+    punch: 0.8
+
+  # Snare roll (increasing)
+  - type: snare
+    pattern: [ 0, 0, 0.3, 0, 0, 0, 0.5, 0 ] # Building pattern
+    volume: 0.5
+    tone: 0.6
+
+  # Progressive pluck bass
+  - type: pluck_bass
+    notes: [ "A1", "A1", "F1", "F1", "C2", "C2", "G1", "G1", "A1", "A1", "F1", "F1", "C2", "C2", "G1", "G1" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 0.7
+
+  # Supersaw lead building tension
+  - type: supersaw
+    notes: [ "A4", "C5", "E5", "F5", "E5", "C5", "A4", "G4", "E4", "G4", "C5", "E5", "G5", "F5", "E5", "C5" ]
+    durations: [ 1, 0.5, 0.5, 1, 0.5, 0.5, 1, 1, 1, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5 ]
+    volume: 0.5
+    detune: 0.04
+    voices: 7
+
+  # Supporting pad chords
+  - type: pad
+    notes: [ "A3", "F3", "C3", "G3" ]
+    durations: [ 16, 16, 16, 16 ]
+    volume: 0.3
+
+  # Rising sweep
+  - type: sweep
+    start_freq: 200
+    end_freq: 5000
+    volume: 0.3
+
+# ============================================
+# PRE-DROP 1 (8 bars) - Maximum Tension
+# ============================================
+- name: pre_drop1
+  bars: 8
+  tracks:
+  # Fast kick build
+  - type: kick
+    pattern: [ 1, 0, 1, 0 ]
+    volume: 0.8
+    punch: 1.0
+
+  # Snare roll crescendo
+  - type: snare
+    pattern: [ 0.2, 0.3, 0.5, 0.7 ]
+    volume: 0.8
+    tone: 0.7
+
+  # Epic supersaw chord stabs
+  - type: supersaw
+    notes: [ "A5", "rest", "F5", "rest", "C6", "rest", "G5", "rest", "A5", "A5", "F5", "F5", "C6", "C6", "E6", "G6" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    volume: 0.8
+    detune: 0.05
+    voices: 9
+
+  # Massive riser
+  - type: white_noise_riser
+    volume: 0.6
+
+  # Sub bass rumble
+  - type: sub_bass
+    notes: [ "A0", "A0", "A0", "A0" ]
+    durations: [ 8, 8, 8, 8 ]
+    volume: 0.5
+
+# ============================================
+# DROP 1 (16 bars) - First Festival Drop
+# ============================================
+- name: drop1
+  bars: 16
+  tracks:
+  # Festival kick
+  - type: kick
+    pattern: [ 1, 0, 0, 0 ]
+    volume: 1.0
+    punch: 1.2
+
+  # Impact on first beat
+  - type: impact
+    volume: 0.8
+
+  # Clap
+  - type: clap
+    pattern: [ 0, 0, 1, 0 ]
+    volume: 0.7
+
+  # Future bass wobble
+  - type: future_bass
+    notes: [ "A2", "rest", "rest", "rest", "F2", "rest", "rest", "rest", "C2", "rest", "rest", "rest", "G2", "rest", "rest", "rest" ]
+    durations: [ 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    volume: 0.9
+
+  # Pitch bend bass for movement
+  - type: pitch_bend_bass
+    notes: [ "A1", "A1", "G1", "F1", "F1", "E1", "C2", "C2", "C2", "B1", "A1", "G1", "G1", "F1", "E1", "G1" ]
+    bend_notes: [ "A1", "G1", "F1", "F1", "E1", "D1", "C2", "B1", "A1", "A1", "G1", "G1", "F1", "E1", "D1", "A1" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    bass_style: "pluck"
+    volume: 0.8
+
+  # Epic supersaw lead melody
+  - type: supersaw
+    notes: [ "E5", "D5", "C5", "A4", "C5", "E5", "F5", "E5", "G5", "F5", "E5", "C5", "E5", "G5", "A5", "G5", "F5", "E5", "D5", "C5", "A4", "C5", "E5", "C5", "G5", "A5", "C6", "A5", "G5", "E5", "C5", "A4" ]
+    durations: [ 0.5, 0.25, 0.25, 0.5, 0.25, 0.25, 0.5, 0.5, 0.5, 0.25, 0.25, 0.5, 0.25, 0.25, 0.5, 0.5, 0.5, 0.25, 0.25, 0.5, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 0.9
+    detune: 0.035
+    voices: 7
+
+  # Hi-hats for groove
+  - type: hihat
+    pattern: [ 0, 0.3, 0, 0.5, 0, 0.3, 0, 0.6 ]
+    volume: 0.3
+    tone: 0.7
+
+# ============================================
+# BREAKDOWN (16 bars) - Emotional Break
+# ============================================
+- name: breakdown
+  bars: 16
+  tracks:
+  # Minimal kick
+  - type: kick
+    pattern: [ 1, 0, 0, 0, 0, 0, 0, 0 ]
+    volume: 0.4
+    punch: 0.6
+
+  # Emotional pad progression - Dm - Bb - F - C
+  - type: pad
+    notes: [ "D3", "A3", "F4", "D3", "Bb2", "F3", "D4", "Bb2", "F3", "C4", "A4", "F3", "C3", "G3", "E4", "C3" ]
+    durations: [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+    volume: 0.7
+
+  # Melodic pluck arpeggio
+  - type: pluck
+    notes: [ "D5", "F5", "A5", "D6", "A5", "F5", "D5", "A4", "Bb4", "D5", "F5", "Bb5", "F5", "D5", "Bb4", "F4", "F5", "A5", "C6", "F6", "C6", "A5", "F5", "C5", "C5", "E5", "G5", "C6", "G5", "E5", "C5", "G4" ]
+    durations: [ 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    volume: 0.6
+
+  # Soft reese bass
+  - type: reese_bass
+    notes: [ "D2", "D2", "Bb1", "Bb1", "F2", "F2", "C2", "C2" ]
+    durations: [ 4, 4, 4, 4, 4, 4, 4, 4 ]
+    volume: 0.5
+
+  # Ambient percussion
+  - type: percussion
+    pattern: [ 0, 0, 0.2, 0, 0, 0.3, 0, 0 ]
+    volume: 0.3
+
+# ============================================
+# BUILD 2 (16 bars) - Building to Bigger Drop
+# ============================================
+- name: build2
+  bars: 16
+  tracks:
+  # Building kick
+  - type: kick
+    pattern: [ 1, 0, 0.5, 0 ]
+    volume: 0.8
+    punch: 1.0
+
+  # Snare build
+  - type: snare
+    pattern: [ 0, 0, 1, 0 ]
+    volume: 0.7
+    tone: 0.8
+
+  # Dubstep bass enters
+  - type: dubstep_bass
+    notes: [ "D1", "D1", "F1", "F1", "A1", "A1", "C2", "C2" ]
+    durations: [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+    wobble_rate: 4
+    volume: 0.6
+
+  # Pluck bass layer
+  - type: pluck_bass
+    notes: [ "D2", "D2", "C2", "C2", "Bb1", "Bb1", "A1", "A1", "F1", "F1", "G1", "G1", "A1", "A1", "C2", "C2" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 0.7
+
+  # Supersaw build melody
+  - type: supersaw
+    notes: [ "D5", "E5", "F5", "A5", "C6", "A5", "F5", "E5", "D5", "E5", "F5", "G5", "A5", "C6", "D6", "F6" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 0.7
+    detune: 0.04
+
+  # Massive riser
+  - type: white_noise_riser
+    volume: 0.7
+
+  # Sweep up
+  - type: sweep
+    start_freq: 500
+    end_freq: 10000
+    volume: 0.5
+
+# ============================================
+# DROP 2 (16 bars) - Dubstep-influenced Drop
+# ============================================
+- name: drop2
+  bars: 16
+  tracks:
+  # Heavy kick
+  - type: kick
+    pattern: [ 1, 0, 0, 0 ]
+    volume: 1.0
+    punch: 1.3
+
+  # Snare on 3
+  - type: snare
+    pattern: [ 0, 0, 1, 0 ]
+    volume: 0.9
+    tone: 0.9
+
+  # Dubstep wobble bass
+  - type: dubstep_bass
+    notes: [ "D1", "D1", "D1", "D1", "F1", "F1", "F1", "F1", "A1", "A1", "A1", "A1", "C2", "C2", "C2", "C2" ]
+    durations: [ 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    wobble_rate: 8
+    volume: 0.9
+
+  # Future bass layer
+  - type: future_bass
+    notes: [ "D2", "rest", "F2", "rest", "A2", "rest", "C3", "rest" ]
+    durations: [ 1, 1, 1, 1, 1, 1, 1, 1 ]
+    volume: 0.7
+
+  # Aggressive lead
+  - type: supersaw
+    notes: [ "D5", "C5", "A4", "F4", "A4", "C5", "D5", "F5", "A5", "G5", "F5", "D5", "C5", "A4", "C5", "D5" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 0.8
+    detune: 0.05
+    voices: 9
+
+  # Hi-hat groove
+  - type: hihat
+    pattern: [ 0, 0.5, 0.3, 0.7 ]
+    volume: 0.4
+    tone: 0.8
+
+# ============================================
+# BUILD 3 (8 bars) - Final Build
+# ============================================
+- name: build3
+  bars: 8
+  tracks:
+  # Kick buildup
+  - type: kick
+    pattern: [ 1, 1, 1, 1 ]
+    volume: 0.9
+    punch: 1.0
+
+  # Snare roll
+  - type: snare
+    pattern: [ 0.3, 0.5, 0.7, 0.9 ]
+    volume: 0.9
+
+  # All synths building
+  - type: supersaw
+    notes: [ "A5", "A5", "A5", "A5", "C6", "C6", "C6", "C6", "E6", "E6", "E6", "E6", "G6", "G6", "A6", "C7" ]
+    durations: [ 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    volume: 0.9
+    detune: 0.06
+    voices: 11
+
+  # Final riser
+  - type: white_noise_riser
+    volume: 0.9
+
+# ============================================
+# FINAL DROP (32 bars) - Epic Festival Finale
+# ============================================
+- name: final_drop
+  bars: 32
+  tracks:
+  # Festival kick
+  - type: kick
+    pattern: [ 1, 0, 0, 0 ]
+    volume: 1.0
+    punch: 1.5
+
+  # Double impact
+  - type: impact
+    volume: 1.0
+
+  # Snare and clap layered
+  - type: snare
+    pattern: [ 0, 0, 1, 0 ]
+    volume: 0.9
+
+  - type: clap
+    pattern: [ 0, 0, 1, 0, 0, 0.5, 0, 0 ]
+    volume: 0.7
+
+  # All bass types layered
+  - type: dubstep_bass
+    notes: [ "A1", "A1", "F1", "F1", "C2", "C2", "G1", "G1" ]
+    durations: [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+    wobble_rate: 4
+    volume: 0.7
+
+  - type: future_bass
+    notes: [ "A2", "rest", "F2", "rest", "C3", "rest", "G2", "rest" ]
+    durations: [ 1, 1, 1, 1, 1, 1, 1, 1 ]
+    volume: 0.6
+
+  - type: pitch_bend_bass
+    notes: [ "A1", "G1", "F1", "E1", "C2", "B1", "G1", "A1" ]
+    bend_notes: [ "G1", "F1", "E1", "D1", "B1", "A1", "F1", "A1" ]
+    durations: [ 1, 1, 1, 1, 1, 1, 1, 1 ]
+    bass_style: "reese"
+    volume: 0.5
+
+  # Epic lead melody - full festival energy
+  - type: supersaw
+    notes: [ "A5", "G5", "F5", "E5", "C5", "E5", "F5", "G5", "A5", "C6", "E6", "G6", "F6", "E6", "C6", "A5", "G5", "F5", "E5", "C5", "A4", "C5", "E5", "G5", "A5", "C6", "E6", "G6", "A6", "G6", "E6", "C6", "A5", "rest", "rest", "rest", "F5", "rest", "rest", "rest", "C6", "rest", "rest", "rest", "G5", "rest", "rest", "rest", "A5", "C6", "E6", "A6", "G6", "E6", "C6", "A5", "F5", "A5", "C6", "F6", "E6", "C6", "A5", "G5" ]
+    durations: [ 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    volume: 1.0
+    detune: 0.04
+    voices: 9
+
+  # Percussion groove
+  - type: percussion
+    pattern: [ 0, 0.4, 0.2, 0.6, 0.3, 0.5, 0.2, 0.7 ]
+    volume: 0.5
+
+  # Hi-hats
+  - type: hihat
+    pattern: [ 0, 0.5, 0.3, 0.7, 0, 0.6, 0.4, 0.8 ]
+    volume: 0.4
+    tone: 0.9
+
+# ============================================
+# OUTRO (16 bars) - Festival Ending
+# ============================================
+- name: outro
+  bars: 16
+  tracks:
+  # Kick fading
+  - type: kick
+    pattern: [ 1, 0, 0, 0, 0, 0, 0, 0 ]
+    volume: 0.5
+    punch: 0.7
+
+  # Final pad chords
+  - type: pad
+    notes: [ "A2", "F2", "C3", "G2", "A2", "rest", "rest", "rest" ]
+    durations: [ 4, 4, 4, 4, 8, 8, 8, 8 ]
+    volume: 0.6
+
+  # Pluck melody fadeout
+  - type: pluck
+    notes: [ "A5", "G5", "F5", "E5", "C5", "A4", "rest", "rest" ]
+    durations: [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+    volume: 0.4
+
+  # Final supersaw chord
+  - type: supersaw
+    notes: [ "A4", "C5", "E5", "A5", "rest", "rest", "rest", "rest" ]
+    durations: [ 8, 8, 8, 8, 8, 8, 8, 8 ]
+    volume: 0.5
+    detune: 0.03
+
+  # Reverse sweep ending
+  - type: sweep
+    start_freq: 8000
+    end_freq: 50
+    reverse: true
+    volume: 0.5
+
+  # Final impact
+  - type: impact
+    volume: 0.3

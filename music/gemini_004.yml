@@ -1,0 +1,145 @@
+tempo: 128
+sample_rate: 44100
+sidechain: true
+sidechain_style: pump
+sidechain_strength: 0.7
+
+sections:
+# =======================================================
+# INTRO (16 bars) - Atmospheric and evolving introduction
+# =======================================================
+- name: intro
+  bars: 16
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 0, 0, 0, 0, 0, 0 ] # Sparse, heartbeat kick
+    volume: 0.5
+    punch: 0.6
+  - type: pad
+    notes: [ "A2", "F2", "C3", "G2" ] # Am-F-C-G progression
+    durations: [ 16, 16, 16, 16 ]
+    volume: 0.6
+    automation: "swell" # Gradual volume swell for a more organic feel
+  - type: pluck
+    notes: [ "rest", "E4", "C4", "E4", "F4", "E4", "C4", "rest", "G4", "E4", "D4", "E4", "C4", "rest", "rest", "rest" ]
+    durations: [ 1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5, 0.5, 0.5, 1, 1, 1, 1 ]
+    volume: 0.45
+  - type: reese_bass # Hint at the upcoming bassline in the last 4 bars
+    notes: [ "A1" ]
+    durations: [ 16 ]
+    volume: 0.2
+    start_bar: 12 # Start this track at bar 13 of the intro
+
+# =======================================================
+# BUILDUP (8 bars) - Increase melodic complexity and energy
+# =======================================================
+- name: buildup
+  bars: 8
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 1, 0 ] # A slightly more driving kick pattern
+    volume: 0.6
+    punch: 0.7
+  - type: pad
+    notes: [ "D3", "Bb2", "F3", "C3" ] # Dm-Bb-F-C progression
+    durations: [ 16, 16, 16, 16 ]
+    volume: 0.8
+  - type: pluck
+    notes: [ "D5", "F5", "A5", "F5", "D5", "A4", "Bb4", "D5", "F5", "D5", "Bb4", "F4", "F4", "A4", "C5", "A4", "F4", "C5", "C4", "E4", "G4", "E4", "C4", "G3" ]
+    durations: [ 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5 ]
+    volume: 0.7
+  - type: reese_bass
+    notes: [ "D2", "Bb1", "F2", "C2" ]
+    durations: [ 16, 16, 16, 16 ]
+    volume: 0.7
+  - type: snare # Add a snare on the 4th beat of every second bar to build tension
+    pattern: [ 0, 0, 0, 0, 0, 0, 0, 1 ]
+    volume: 0.5
+
+# =======================================================
+# PRE-DROP (8 bars) - Maximum tension build-up
+# =======================================================
+- name: pre_drop
+  bars: 8
+  tracks:
+  - type: kick
+    pattern: [ 1, 1, 1, 1 ] # Four-on-the-floor kick
+    volume: 1.0
+  - type: supersaw
+    notes: [ "A5", "A5", "F5", "F5", "C6", "C6", "G5", "G5", "A5", "C6", "E6", "G6", "A6", "C7", "E7", "G7" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    volume: 0.9
+    detune: 0.05
+    voices: 9
+    automation: "fade_in" # Fade in the supersaw for a smoother build
+  - type: reese_bass
+    notes: [ "A1" ] # Hold a single root note for tension
+    durations: [ 32 ] # Hold for the entire 8 bars
+    volume: 0.8
+  - type: white_noise_riser # Classic riser for tension
+    volume: 0.6
+
+# =======================================================
+# DROP 1 (16 bars) - Progressive House / Future Bass
+# =======================================================
+- name: drop1
+  bars: 16
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 0.8, 0 ] # Syncopated kick
+    volume: 1.0
+    punch: 1.2
+  - type: impact
+    volume: 0.9
+  - type: clap
+    pattern: [ 0, 1, 0, 1 ] # Clap on 2 and 4 for a stronger groove
+    volume: 0.8
+  - type: pitch_bend_bass
+    notes: [ "A1", "A1", "G1", "F1", "F1", "E1", "C2", "B1", "G1", "G1", "A1", "C2", "F1", "E1", "D1", "C1" ]
+    bend_notes: [ "A1", "G1", "F1", "F1", "E1", "C2", "B1", "G1", "G1", "A1", "C2", "B1", "E1", "D1", "C1", "A0" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    bass_style: "pluck"
+    volume: 0.9
+  - type: future_bass
+    notes: [ "A2", "rest", "F2", "rest", "C2", "rest", "G2", "rest" ]
+    durations: [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+    volume: 0.7
+  - type: supersaw
+    notes: [ "E5", "F5", "E5", "C5", "A4", "C5", "E5", "C5", "G4", "A4", "G4", "E4", "C4", "E4", "G4", "E4" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 1.0
+    detune: 0.035
+    voices: 7
+
+# =======================================================
+# BREAKDOWN (16 bars) - Emotional & Atmospheric with melodic continuity
+# =======================================================
+- name: breakdown
+  bars: 16
+  tracks:
+  - type: sweep # A reversed sweep to ease out of the drop
+    reverse: true
+    start_freq: 8000
+    end_freq: 200
+    volume: 0.5
+  - type: kick
+    pattern: [ 1, 0, 0, 0, 0, 0, 0, 0 ] # Heartbeat kick returns
+    volume: 0.4
+    punch: 0.5
+  - type: pad
+    notes: [ "D3", "Bb2", "F3", "C3" ] # Dm-Bb-F-C progression
+    durations: [ 16, 16, 16, 16 ]
+    volume: 0.9
+  - type: pluck # Bring back the pluck melody for thematic consistency
+    notes: [ "D5", "F5", "A5", "F5", "D5", "A4", "Bb4", "D5", "F5", "D5", "Bb4", "F4", "F4", "A4", "C5", "A4", "F4", "C5", "C4", "E4", "G4", "E4", "C4", "G3" ]
+    durations: [ 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5 ]
+    volume: 0.75
+  - type: reese_bass
+    notes: [ "D2", "Bb1", "F2", "C2" ]
+    durations: [ 16, 16, 16, 16 ]
+    volume: 0.6
+  - type: supersaw # A single, long, echoing note from the drop melody for a seamless transition
+    notes: [ "E4" ]
+    durations: [ 16 ]
+    volume: 0.5
+    automation: "fade_out"

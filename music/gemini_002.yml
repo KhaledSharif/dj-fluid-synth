@@ -1,0 +1,220 @@
+# Professional EDM Track - 'Gemini Ascendant' (V2 - Tonal Risers)
+# A fusion of Progressive House, Future Bass, and Dubstep elements.
+# Replaced white noise risers with synthesized sweeps for a more musical and professional tension build.
+
+tempo: 128
+sample_rate: 44100
+sidechain: true
+sidechain_style: pump
+sidechain_strength: 0.65
+
+sections:
+# =======================================================
+# INTRO (16 bars) - Atmospheric and Melodic Introduction
+# =======================================================
+- name: intro
+  bars: 16
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 0, 0, 0, 0, 0, 0 ] # Sparse, heartbeat kick
+    volume: 0.4
+    punch: 0.6
+  - type: pad
+    notes: [ "A2", "F2", "C3", "G2" ] # Am-F-C-G progression
+    durations: [ 16, 16, 16, 16 ]
+    volume: 0.5
+  - type: pluck
+    notes: [ "rest", "E4", "C4", "E4", "F4", "E4", "C4", "rest", "G4", "E4", "D4", "E4", "C4", "rest", "rest", "rest" ]
+    durations: [ 1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5, 0.5, 0.5, 1, 1, 1, 1 ]
+    volume: 0.4
+  - type: sweep # CHANGED: Replaced white_noise_riser with a subtle tonal sweep
+    start_freq: 200
+    end_freq: 4000
+    volume: 0.2
+
+# =======================================================
+# BUILD 1 (16 bars) - Building Energy & Tension
+# =======================================================
+- name: build1
+  bars: 16
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 1, 0 ]
+    volume: 0.7
+    punch: 0.9
+  - type: snare
+    pattern: [ 0, 0, 0.3, 0, 0, 0, 0.5, 0, 0, 0.3, 0.5, 0, 0, 0.5, 0.7, 0 ] # Increasing intensity
+    volume: 0.6
+  - type: pluck_bass
+    notes: [ "A1", "A1", "A1", "A1", "F1", "F1", "F1", "F1", "C2", "C2", "C2", "C2", "G1", "G1", "G1", "G1" ]
+    durations: [ 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    volume: 0.8
+  - type: supersaw
+    notes: [ "A4", "rest", "C5", "rest", "E5", "rest", "F5", "E5", "C5", "rest", "G4", "rest", "A4", "rest", "C5", "G4" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 0.6
+    detune: 0.04
+  - type: sweep
+    start_freq: 300
+    end_freq: 6000
+    volume: 0.4
+
+# =======================================================
+# PRE-DROP (8 bars) - Maximum Tension
+# =======================================================
+- name: pre_drop
+  bars: 8
+  tracks:
+  - type: kick
+    pattern: [ 1, 1, 1, 1 ]
+    volume: 1.0
+  - type: snare
+    pattern: [ 0.2, 0.4, 0.6, 0.8 ] # Classic roll
+    volume: 0.9
+  - type: supersaw
+    notes: [ "A5", "A5", "F5", "F5", "C6", "C6", "G5", "G5", "A5", "C6", "E6", "G6", "A6", "C7", "E7", "G7" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    volume: 0.9
+    detune: 0.05
+    voices: 9
+  - type: sweep # CHANGED: Replaced white_noise_riser with a powerful, high-frequency sweep
+    start_freq: 400
+    end_freq: 15000
+    volume: 0.8
+
+# =======================================================
+# DROP 1 (16 bars) - Progressive House / Future Bass
+# =======================================================
+- name: drop1
+  bars: 16
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 0.5, 0 ] # Syncopated kick
+    volume: 1.0
+    punch: 1.2
+  - type: impact
+    volume: 0.9
+  - type: clap
+    pattern: [ 0, 0, 1, 0 ]
+    volume: 0.8
+  - type: pitch_bend_bass
+    notes: [ "A1", "A1", "G1", "F1", "F1", "E1", "C2", "B1", "G1", "G1", "A1", "C2", "F1", "E1", "D1", "C1" ]
+    bend_notes: [ "A1", "G1", "F1", "F1", "E1", "C2", "B1", "G1", "G1", "A1", "C2", "B1", "E1", "D1", "C1", "A0" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    bass_style: "pluck"
+    volume: 0.9
+  - type: future_bass
+    notes: [ "A2", "rest", "F2", "rest", "C2", "rest", "G2", "rest" ]
+    durations: [ 2, 2, 2, 2, 2, 2, 2, 2 ]
+    volume: 0.7
+  - type: supersaw
+    notes: [ "E5", "F5", "E5", "C5", "A4", "C5", "E5", "C5", "G4", "A4", "G4", "E4", "C4", "E4", "G4", "E4" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 1.0
+    detune: 0.035
+    voices: 7
+  - type: hihat
+    pattern: [ 0, 0.4, 0.6, 0.2, 0, 0.5, 0.3, 0.7 ]
+    volume: 0.4
+    tone: 0.6
+
+# =======================================================
+# BREAKDOWN (16 bars) - Emotional & Atmospheric
+# =======================================================
+- name: breakdown
+  bars: 16
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 0, 0, 0, 0, 0, 0 ] # Heartbeat
+    volume: 0.3
+    punch: 0.5
+  - type: pad
+    notes: [ "D3", "Bb2", "F3", "C3" ] # Dm-Bb-F-C progression
+    durations: [ 16, 16, 16, 16 ]
+    volume: 0.8
+  - type: pluck
+    notes: [ "D5", "F5", "A5", "F5", "D5", "A4", "Bb4", "D5", "F5", "D5", "Bb4", "F4", "F4", "A4", "C5", "A4", "F4", "C5", "C4", "E4", "G4", "E4", "C4", "G3" ]
+    durations: [ 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.5 ]
+    volume: 0.7
+  - type: reese_bass
+    notes: [ "D2", "Bb1", "F2", "C2" ]
+    durations: [ 16, 16, 16, 16 ]
+    volume: 0.6
+
+# =======================================================
+# BUILD 2 (8 bars) - Building to Second Drop
+# =======================================================
+- name: build2
+  bars: 8
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 1, 0.5 ]
+    volume: 0.9
+    punch: 1.1
+  - type: snare
+    pattern: [ 0, 0, 1, 0 ]
+    volume: 0.8
+  - type: dubstep_bass
+    notes: [ "D1", "D1", "Bb0", "Bb0", "F1", "F1", "C1", "C1" ]
+    durations: [ 1, 1, 1, 1, 1, 1, 1, 1 ]
+    wobble_rate: 4 # Slower wobble to build into the drop
+    volume: 0.7
+  - type: supersaw
+    notes: [ "D5", "E5", "F5", "A5", "C6", "A5", "F5", "E5" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 0.8
+  - type: sweep
+    start_freq: 1000
+    end_freq: 12000
+    volume: 0.7
+
+# =======================================================
+# DROP 2 (16 bars) - Dubstep / Hybrid Influence
+# =======================================================
+- name: drop2
+  bars: 16
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 0, 0 ]
+    volume: 1.0
+    punch: 1.4
+  - type: snare
+    pattern: [ 0, 0, 1, 0 ]
+    volume: 1.0
+    tone: 0.8
+  - type: dubstep_bass
+    notes: [ "D1", "rest", "D1", "rest", "Bb0", "rest", "Bb0", "rest", "F1", "rest", "F1", "rest", "C1", "rest", "C1", "rest" ]
+    durations: [ 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25 ]
+    wobble_rate: 8 # Faster, more aggressive wobble
+    volume: 1.0
+  - type: pluck
+    notes: [ "rest", "D5", "rest", "F5", "rest", "A5", "rest", "C6" ]
+    durations: [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 ]
+    volume: 0.6
+  - type: hihat
+    pattern: [ 0, 0, 0.7, 0, 0, 0, 0.8, 0 ]
+    volume: 0.5
+    tone: 0.9
+
+# =======================================================
+# OUTRO (8 bars) - Fading Out
+# =======================================================
+- name: outro
+  bars: 8
+  tracks:
+  - type: kick
+    pattern: [ 1, 0, 0, 0, 0, 0, 0, 0 ]
+    volume: 0.6
+  - type: pad
+    notes: [ "D3", "rest", "rest", "rest" ]
+    durations: [ 32, 32, 32, 32 ]
+    volume: 0.7
+  - type: melody
+    notes: [ "A4", "F4", "D4", "rest", "rest", "rest", "rest", "rest" ]
+    durations: [ 2, 2, 4, 4, 4, 4, 4, 4 ]
+    volume: 0.5
+  - type: sweep
+    start_freq: 10000
+    end_freq: 100
+    reverse: true
+    volume: 0.6
