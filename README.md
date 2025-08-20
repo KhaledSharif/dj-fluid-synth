@@ -414,17 +414,18 @@ sections:
         volume: 0.8
 ```
 
-
 ## Testing
 
 ### Running Unit Tests
 
 The project includes comprehensive unit tests organized into three modules:
+
 - `test_core.py` - Tests for core functionality (note conversion, envelopes, filters, sidechain)
 - `test_instruments.py` - Tests for all instrument generators and synths
 - `test_yaml_generation.py` - Tests for YAML file processing and track generation
 
 #### Run All Tests
+
 ```bash
 # Run all tests with verbose output
 python -m unittest discover tests -v
